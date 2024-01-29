@@ -22,9 +22,9 @@ def main(params):
     # the backup files are gzipped, and it's important to keep the correct extension
     # for pandas to be able to open the file
     if url.endswith('.csv.gz'):
-        csv_name = 'output.csv.gz'
+        csv_name = 'taxi+_zone_lookup.csv.gz'
     else:
-        csv_name = 'output.csv'
+        csv_name = 'taxi+_zone_lookup.csv'
 
     os.system(f"wget {url} -O {csv_name}")
 
@@ -34,8 +34,8 @@ def main(params):
 
     df = next(df_iter)
 
-    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+    #df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+    #df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
 
     df.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
 
@@ -49,8 +49,8 @@ def main(params):
             
             df = next(df_iter)
 
-            df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-            df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+            #df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+            #df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
 
             df.to_sql(name=table_name, con=engine, if_exists='append')
 
